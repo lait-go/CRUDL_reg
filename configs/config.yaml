@@ -1,0 +1,9 @@
+port: 8080
+
+database:
+  host: db
+  port: 5432
+  user: lait
+  password: 123
+  name: subscription_db
+

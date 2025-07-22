@@ -1,0 +1,172 @@
+basePath: /
+definitions:
+  models.UserSub:
+    properties:
+      endDate:
+        type: string
+      id:
+        type: integer
+      monthlyPrice:
+        type: number
+      serviceName:
+        type: string
+      startDate:
+        type: string
+      userId:
+        type: string
+    required:
+    - serviceName
+    - startDate
+    - userId
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API для управления подписками пользователей
+  title: User Subscription API
+  version: "1.0"
+paths:
+  /api/user:
+    get:
+      consumes:
+      - application/json
+      description: Получение информации всех пользователей
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.UserSub'
+            type: array
+        "400":
+          description: Ошибка валидации или получения данных
+          schema:
+            type: string
+      summary: Получение информации всех пользователей
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Добавляет нового пользователя с подпиской
+      parameters:
+      - description: Информация о подписке
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserSub'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Ошибка валидации или получения данных
+          schema:
+            type: string
+        "500":
+          description: Ошибка при добавлении пользователя
+          schema:
+            type: string
+      summary: Добавление пользователя
+      tags:
+      - users
+  /api/user/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Удаляет пользователя по user_id
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: Пользователь успешно удален
+        "400":
+          description: Не передан user_id
+          schema:
+            type: string
+        "500":
+          description: Ошибка при удалении пользователя
+          schema:
+            type: string
+      summary: Удаление пользователя
+      tags:
+      - users
+    get:
+      consumes:
+      - application/json
+      description: Поиск пользователя по user_id
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserSub'
+        "400":
+          description: Ошибка валидации или получения данных
+          schema:
+            type: string
+        "500":
+          description: Ошибка при получении пользователя
+          schema:
+            type: string
+      summary: Поиск пользователя
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: Обновляет информацию о подписке пользователя по user_id
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Информация о подписке
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserSub'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Ошибка валидации или получения данных
+          schema:
+            type: string
+        "500":
+          description: Ошибка при обновлении пользователя
+          schema:
+            type: string
+      summary: Обновление информации о пользователе
+      tags:
+      - users
+swagger: "2.0"
